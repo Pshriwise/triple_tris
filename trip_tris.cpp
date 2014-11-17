@@ -83,7 +83,7 @@ ErrorCode triple_triangle( Interface* mb, EntityHandle surfset, EntityHandle tri
   ERR_CHECK(rval);
   
 
-  CartVect center_pnt = (1/3)*coords[0] + (1/3)*coords[1] + (1/3)*coords[2];
+  CartVect center_pnt = (1.0/3.0)*coords[0] + (1.0/3.0)*coords[1] + (1.0/3.0)*coords[2];
   EntityHandle center_vtx; 
 
 
@@ -120,6 +120,9 @@ ErrorCode triple_triangle( Interface* mb, EntityHandle surfset, EntityHandle tri
   ERR_CHECK(rval);
 
   //remove the original triangle from the model (original verts should remain)
+  rval = mb->remove_entities( surfset, &triangle, 1);
+  ERR_CHECK(rval);
+
   rval = mb->delete_entities( &triangle, 1); 
   ERR_CHECK(rval); 
 
