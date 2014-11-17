@@ -1,6 +1,7 @@
 
 #include "MBTagConventions.hpp"
 #include "MBCore.hpp"
+#include "MBCartVect.hpp"
 
 #include "trip_tris.hpp"
 
@@ -34,8 +35,43 @@ ErrorCode triple_model_tris( Interface *mb )
       rval = mb->get_entities_by_type( *i, MBTRI, surf_tris);
       ERR_CHECK(rval);
 
+      //and for every triangle, replace it with three triangles which together represent the original
+      for( unsigned int j = 0; j < surf_tris.size(); j++)
+	{
+	  
+	  rval = triple_triangle( mb, *i, surf_tris[j]);
+	  ERR_CHECK(rval);
+
+	}
+
     }
 
   return MB_SUCCESS;
 }
   
+
+ErrorCode triple_triangle( Interface* mb, EntityHandle meshset, EntityHandle triangle)
+{
+  
+  ErrorCode rval; 
+  //get the vertices of the triangle
+  const EntityHandle* conn; 
+  int n_verts; 
+  
+  rval = mb->get_connectivity( triangle, conn, n_verts);
+  ERR_CHECK(rval); 
+  
+  assert(3 == n_verts);
+
+  //get the coordinates of these vertices
+  CartVect coords[3];
+  
+  rval = mb->get_coords( conn, n_verts, coords[0].array() ); 
+  ERR_CHECK(rval);
+  
+
+
+
+
+
+}
