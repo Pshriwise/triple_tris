@@ -4,13 +4,13 @@
 #include "MBCore.hpp"
 #include "moab/ProgOptions.hpp"
 
-
-
 using namespace moab;
 
 
 int main( int argc, char **argv)
 {
+
+  ErrorCode rval; 
 
   std::string filename; 
 
@@ -23,6 +23,11 @@ int main( int argc, char **argv)
   //create a new moab instance
   Interface *mb = new MBCore(); 
   // load the file 
+  rval = mb->load_file( filename.c_str() ); 
+  ERR_CHECK(rval); 
+
+  rval = triple_model_tris( mb ); 
+  ERR_CHECK(rval); 
 
   return 0;
 }

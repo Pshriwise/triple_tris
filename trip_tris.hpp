@@ -6,7 +6,7 @@
 
 using namespace moab;
 
-ErrorCode triple_model_tris( Interface *mb); 
+ErrorCode triple_model_tris( Interface *mb ); 
 
 
 inline void ERR_CHECK( ErrorCode rval)
