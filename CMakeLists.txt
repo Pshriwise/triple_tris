@@ -1,25 +1,20 @@
-cmake_minimum_required(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 #project name
 project(dagmc_preproc)
 
+#direct cmake to other required files
+SET ( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
-#iMesh/moab
-set(MOAB_INC ${MOAB_DIR}/include)
-set(MOAB_LIB ${MOAB_DIR}/lib)
+FIND_PACKAGE(MOAB REQUIRED)
 
-#set include flags
-include_directories(${MOAB_INC})
+INCLUDE_DIRECTORIES(${MOAB_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR})
 
-#set lib flags
-set(LIBRARIES ${MOAB_LIB}/libMOAB.so)
+SET(SOURCES_FILES triple_triangles.cpp trip_tris.cpp)
 
-#set c++ flags
-set(CMAKE_CXX_FLAGS -g)
+SET(CMAKE_INSTALL_PREFIX .)
+ADD_EXECUTABLE(triple_triangles ${SOURCES_FILES})
+TARGET_LINK_LIBRARIES(triple_triangles ${MOAB_LIBRARIES})
 
-set(CMAKE_INSTALL_PREFIX .)
-add_executable(triple_triangles triple_triangles.cpp)
-target_link_libraries(triple_triangles ${LIBRARIES})
-
-install(TARGETS triple_triangles DESTINATION .)
+INSTALL(TARGETS triple_triangles DESTINATION .)
 
