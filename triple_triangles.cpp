@@ -29,5 +29,14 @@ int main( int argc, char **argv)
   rval = triple_model_tris( mb ); 
   ERR_CHECK(rval); 
 
+  filename = filename.erase( filename.length()-4, filename.length()); 
+
+  filename += "3x.h5m";
+
+  std::cout << "Saving mesh as " << filename << std::endl; 
+
+  rval = mb->write_mesh( filename.c_str() ); 
+  ERR_CHECK(rval); 
+
   return 0;
 }
